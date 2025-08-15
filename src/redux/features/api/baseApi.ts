@@ -18,7 +18,7 @@ interface ErrorResponseData {
 
 // Use FetchBaseQueryError for the baseQuery error type, but handle ErrorResponseData internally
 const baseQuery = fetchBaseQuery({
-  baseUrl: `https://api.10minuteschool.com/discovery-service/api/v1/products/ielts-course`,
+  baseUrl: `http://localhost:4000/api/v1`,
   prepareHeaders: (headers) => {
     const token = Cookies.get("token");
     if (token) {
@@ -66,6 +66,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["course", "faq"],
+  tagTypes: ["service", ],
   endpoints: () => ({}),
 });
