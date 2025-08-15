@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "arial", "arial";
+  font-weight: 500;
+  font-style: normal;
+}
+
+.clip-wave {
+  clip-path: polygon(0% 0, 0% 80%, 0% 100%, 90% 10%);
+  width: 100%;
+  z-index: 0;
+}
+
+
+@keyframes zoom {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+.animate-zoom {
+    animation: zoom 6s ease-out infinite;
+}
