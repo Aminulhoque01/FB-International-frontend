@@ -5,17 +5,19 @@
 
 
  
-
-import HeroSection from "@/components/Pages/Home/HeroSection";
+ 
+ 
+import CreateServicePage from "@/components/Pages/Home/CreateService";
+import GetAllService from "@/components/Pages/Home/GetAllService";
 import React from "react";
 
 
 const Home = () => {
   return (
     <section className="w-full min-h-[900px]">
-
-      <HeroSection />
-      
+  
+      <CreateServicePage></CreateServicePage>
+      <GetAllService/>
 
     </section>
   );

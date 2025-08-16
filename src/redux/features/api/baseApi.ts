@@ -1,6 +1,7 @@
 
 
 
+
 import {
   createApi,
   fetchBaseQuery,
@@ -11,14 +12,12 @@ import {
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 
-// Define the shape of the error response from the API
 interface ErrorResponseData {
   message: string;
 }
 
-// Use FetchBaseQueryError for the baseQuery error type, but handle ErrorResponseData internally
 const baseQuery = fetchBaseQuery({
-  baseUrl: `http://localhost:4000/api/v1`,
+  baseUrl: "https://service-kappa-seven.vercel.app/api/v1",
   prepareHeaders: (headers) => {
     const token = Cookies.get("token");
     if (token) {
@@ -37,7 +36,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
   if (result.error) {
     const { status, data } = result.error;
-    // Safely access the message property with a type guard or fallback
     const message =
       typeof data === "object" && data !== null && "message" in data
         ? (data as ErrorResponseData).message
@@ -54,8 +52,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
         toast.error(message || "Conflict");
         break;
       case 401:
-        console.log("Unauthorized:", result.error);
-        // window.location.href = "/login"; // Uncomment if redirect is needed
+        toast.error("Please authenticate to access this resource");
+        break;
+      default:
+        toast.error(message);
         break;
     }
   }
@@ -66,6 +66,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["service", ],
+  tagTypes: ["service"],
   endpoints: () => ({}),
 });
