@@ -1,9 +1,17 @@
+"use client";
 import { useCreateServiceMutation } from '@/redux/features/service/Service';
 import { FC, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const categories = ["Food", "Transport", "Shopping", "Others"];
+
+interface ApiError {
+  data?: {
+    message?: string;
+  };
+  status?: number;
+}
 
 const CreateServicePage: FC = () => {
   const [createService] = useCreateServiceMutation();
@@ -16,10 +24,9 @@ const CreateServicePage: FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData); // Debug form data
-    console.log('Title Length:', formData.title.trim().length); // Debug title length
+    console.log('Form Data:', formData);
+    console.log('Title Length:', formData.title.trim().length);
 
-    // Validate title
     if (formData.title.trim().length < 3) {
       toast.error('Title must be at least 3 characters long', {
         position: 'top-right',
@@ -32,7 +39,6 @@ const CreateServicePage: FC = () => {
       return;
     }
 
-    // Validate amount
     if (isNaN(parseFloat(formData.amount))) {
       toast.error('Amount must be a valid number', {
         position: 'top-right',
@@ -47,7 +53,7 @@ const CreateServicePage: FC = () => {
 
     try {
       await createService({
-        title: formData.title.trim(), // Ensure trimmed title
+        title: formData.title.trim(),
         amount: parseFloat(formData.amount),
         category: formData.category,
         date: formData.date,
@@ -66,9 +72,9 @@ const CreateServicePage: FC = () => {
         category: '',
         date: '',
       });
-    } catch (err: any) {
-      console.error('Error from createService:', err); // Log full error
-      const errorMessage = err?.data?.message || 'Failed to add service';
+    } catch (err: unknown) {
+      console.error('Error from createService:', err);
+      const errorMessage = (err as ApiError)?.data?.message || 'Failed to add service';
       toast.error(errorMessage, {
         position: 'top-right',
         autoClose: 3000,
@@ -92,7 +98,7 @@ const CreateServicePage: FC = () => {
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             className="mt-1 p-2 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter service title"
-            minLength={3} // Enforce minimum length
+            minLength={3}
             required
           />
         </div>
