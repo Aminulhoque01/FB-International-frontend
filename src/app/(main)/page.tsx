@@ -8,6 +8,7 @@
  
  
 import CreateServicePage from "@/components/Pages/Home/CreateService";
+
 import GetAllService from "@/components/Pages/Home/GetAllService";
 import React from "react";
 
@@ -18,7 +19,7 @@ const Home = () => {
   
       <CreateServicePage></CreateServicePage>
       <GetAllService/>
-
+      
     </section>
   );
 };
